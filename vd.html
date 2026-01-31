@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel=stylesheet href="style.css">
+    <title>Valentine's Day Invitation</title>
+</head>
+<body>
+    <h1>Will you be my Valentine?</h1>
+    <img src="cat.gif" alt="Cat with a heart">
+    <div class="button-group">
+        <a href="yes.html"><button id="yes-btn">Yes</button></a>
+        <button id="runaway-btn" style="position: absolute;">No</button>
+    </div>
+    <div id="responseMessage" class="response-message"></div>
+    <script>
+        const btn = document.getElementById('runaway-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const messageElement = document.getElementById("responseMessage");
+
+        let currentScale = 1;
+
+        btn.addEventListener('mouseover', () => {
+            // 1. Kiszámoljuk a mozgásteret (csak a gombok alatti területen)
+            // Így nem fog rámenni a képre (ami feljebb van)
+            const x = Math.floor(Math.random() * (window.innerWidth - btn.clientWidth));
+
+            // A 'y' koordinátát úgy állítjuk be, hogy a képernyő alján maradjon (pl. az alsó 40%-ban)
+            const minY = window.innerHeight * 0.6;
+            const maxY = window.innerHeight - btn.clientHeight;
+            const y = Math.floor(Math.random() * (maxY - minY) + minY);
+
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+
+            currentScale += 0.2; // Minden alkalommal 20%-kal nő
+            yesBtn.style.transform = `scale(${currentScale})`;
+
+            // Opcionális: A Yes gomb simán nőjön (ne ugorjon)
+            yesBtn.style.transition = "transform 0.3s ease";
+
+            // 2. Kiírás a képernyőre (már létező p vagy div elembe)
+            if (messageElement) {
+                messageElement.textContent = "Oops! Did you mean Yes? ❤️";
+            }
+        });
+    </script>
+</body>
+</html>
